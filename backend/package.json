@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
-  },
+"scripts": {
+  "dev": "node --watch src/server.js",
+  "start": "node src/server.js",
+  "migrate": "node-pg-migrate --envPath .env -m migrations",
+  "db-check": "node scripts/check-constraints.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,9 +24,13 @@
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "pg": "^8.23.1"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "node-pg-migrate": "^9.0.0"
   }
 }
