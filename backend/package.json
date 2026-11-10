@@ -7,7 +7,10 @@
   "dev": "node --watch src/server.js",
   "start": "node src/server.js",
   "migrate": "node-pg-migrate --envPath .env -m migrations",
-  "db-check": "node scripts/check-constraints.js"
+  "db-check": "node scripts/check-constraints.js",
+  "test": "node --test",
+"seed": "node scripts/seed.js",
+"seed-reset": "node scripts/seed.js --reset"
 },
   "keywords": [],
   "author": "",

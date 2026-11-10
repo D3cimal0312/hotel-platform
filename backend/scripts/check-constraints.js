@@ -1,6 +1,5 @@
-import db from '../src/db.js';
+import { pool } from '../src/db.js';
 
-const { pool } = db;
 
 // Runs fn inside a transaction that is always rolled back, so nothing is saved.
 async function attempt(fn) {
