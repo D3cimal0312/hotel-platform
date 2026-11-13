@@ -1,19 +1,8 @@
-import {Pool} from 'pg';
-import config from './config.js';
+import pg from 'pg';
+import { config } from './config.js';
 
-// pool keeps a few connection open and reuses them for future queries, instead of opening a new connection for every query
-const pool = new Pool({connectionString:config.databaseUrl});
+export const pool = new pg.Pool({ connectionString: config.databaseUrl });
 
-pool.on('error',(err,client)=>{
-  console.error('Unexpected error on idle client',err);
-  process.exit(-1);
-});
+pool.on('error', (err) => console.error('Unexpected database error', err));
 
-const query = (text,params)=>{
-  return pool.query(text,params);
-}
-
-export default {
-  query,
-  pool
-};
+export const query = (text, params) => pool.query(text, params);
