@@ -1,16 +1,15 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 
-
-//  if required variable is missing the app crashed at start
-function required(name){
+function required(name) {
   const value = process.env[name];
-  if(!value) throw new Error('Missing required env variable: ' + name);
-  return value
+  if (!value) throw new Error(`Missing required environment variable: ${name}`);
+  return value;
 }
 
 const jwtSecret = required('JWT_SECRET');
 if (jwtSecret.length < 32) throw new Error('JWT_SECRET must be at least 32 characters');
+
+const inTests = Boolean(process.env.NODE_TEST_CONTEXT);
 
 export const config = {
   env: process.env.NODE_ENV || 'development',
@@ -21,6 +20,6 @@ export const config = {
   jwtSecret,
   accessTtl: '15m',
   refreshTtlDays: 7,
-  bcryptCost: Number(process.env.BCRYPT_COST) || 12,
-  authRateLimit: Number(process.env.AUTH_RATE_LIMIT) || 20,
-}
+  bcryptCost: Number(process.env.BCRYPT_COST) || (inTests ? 4 : 12),
+  authRateLimit: Number(process.env.AUTH_RATE_LIMIT) || (inTests ? 100000 : 20),
+};
