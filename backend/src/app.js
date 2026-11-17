@@ -5,6 +5,8 @@ import { config } from './config.js';
 import { query } from './db.js';
 import { AppError } from './errors.js';
 import { authRouter } from './auth/routes.js';
+import { adminRouter } from './admin/routes.js';
+import { bookingsRouter } from './bookings/routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 export function createApp() {
@@ -25,8 +27,10 @@ export function createApp() {
   });
 
   app.use('/api/auth', authRouter);
+  app.use('/api/admin', adminRouter);
+  app.use('/api/bookings', bookingsRouter);
 
   app.use((req, res, next) => next(new AppError(404, 'Not found')));
-  app.use(errorHandler); // must be last
+  app.use(errorHandler);
   return app;
 }
